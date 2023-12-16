@@ -1,0 +1,9 @@
+domain: snappcload.io
+layout:
+- go.kubebuilder.io/v3
+plugins:
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+projectName: coredns-operator
+repo: github.com/amirhnajafiz/coredns-operator
+version: "3"
