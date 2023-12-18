@@ -1,6 +1,0 @@
-apiVersion: dns.snappcload.io/v1beta1
-kind: CoreDNS
-metadata:
-  name: coredns-sample
-spec:
-  # TODO(user): Add fields here
