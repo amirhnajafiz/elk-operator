@@ -16,4 +16,13 @@ resources:
   kind: ElkCluster
   path: github.com/amirhnajafiz/elk-operator/api/v1alpha1
   version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: snappcload.io
+  group: monitoring
+  kind: ElkUser
+  path: github.com/amirhnajafiz/elk-operator/api/v1alpha1
+  version: v1alpha1
 version: "3"

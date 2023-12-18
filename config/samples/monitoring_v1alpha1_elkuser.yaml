@@ -1,0 +1,6 @@
+apiVersion: monitoring.snappcload.io/v1alpha1
+kind: ElkUser
+metadata:
+  name: elkuser-sample
+spec:
+  # TODO(user): Add fields here
