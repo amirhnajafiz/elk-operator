@@ -1,0 +1,59 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - monitoring.snappcload.io
+  resources:
+  - elkclusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.snappcload.io
+  resources:
+  - elkclusters/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - monitoring.snappcload.io
+  resources:
+  - elkclusters/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - monitoring.snappcload.io
+  resources:
+  - elkusers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.snappcload.io
+  resources:
+  - elkusers/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - monitoring.snappcload.io
+  resources:
+  - elkusers/status
+  verbs:
+  - get
+  - patch
+  - update
