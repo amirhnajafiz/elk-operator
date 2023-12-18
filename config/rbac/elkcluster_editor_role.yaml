@@ -1,0 +1,24 @@
+# permissions for end users to edit elkclusters.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: elkcluster-editor-role
+rules:
+- apiGroups:
+  - monitoring.snappcload.io
+  resources:
+  - elkclusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.snappcload.io
+  resources:
+  - elkclusters/status
+  verbs:
+  - get
