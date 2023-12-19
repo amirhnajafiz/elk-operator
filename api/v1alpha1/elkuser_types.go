@@ -28,8 +28,14 @@ type ElkUserSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of ElkUser. Edit elkuser_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// Username of the Elk cluster user
+	Username string `json:"username,omitempty"`
+
+	// Password of the Elk cluster user
+	Password string `json:"password,omitempty"`
+
+	// Role of the Elk cluster user
+	Role string `json:"role,omitempty"`
 }
 
 // ElkUserStatus defines the observed state of ElkUser
