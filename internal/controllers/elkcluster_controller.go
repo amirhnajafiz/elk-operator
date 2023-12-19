@@ -52,6 +52,10 @@ func (r *ElkClusterReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	_ = log.FromContext(ctx)
 
 	// TODO(user): your logic here
+	// TODO: get elk cluster resource
+	// TODO: if deleted (clean up) => remove users from db, remove manifests
+	// TODO: check if exists (prevent creating)
+	// TODO: create Elk clusters with Kibana
 
 	return ctrl.Result{}, nil
 }
