@@ -29,9 +29,12 @@ type ElkClusterSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Replica is the number of Elasticsearch clusters
+	// +kubebuilder:validation:Maximum:=3
+	// +kubebuilder:validation:Minimum:=1
 	Replica int `json:"replica,omitempty"`
 
 	// Dashboard is a flag to create a Kibana dashboard
+	// +kubebuilder:validation:Optional
 	Dashboard bool `json:"dashboard,omitempty"`
 }
 
