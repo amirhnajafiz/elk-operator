@@ -29,12 +29,16 @@ type ElkUserSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Username of the Elk cluster user
+	// +kubebuilder:validation:MaxLength:=16
 	Username string `json:"username,omitempty"`
 
 	// Password of the Elk cluster user
+	// +kubebuilder:validation:MaxLength:=16
+	// +kubebuilder:validation:MinLength:=8
 	Password string `json:"password,omitempty"`
 
 	// Role of the Elk cluster user
+	// +kubebuilder:validation:Enum:=Admin;Dev
 	Role string `json:"role,omitempty"`
 }
 
