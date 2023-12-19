@@ -32,7 +32,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	monitoringv1alpha1 "github.com/amirhnajafiz/elk-operator/api/v1alpha1"
-	"github.com/amirhnajafiz/elk-operator/internal/controllers"
+	"github.com/amirhnajafiz/elk-operator/internal/controllers/elkcluster"
+	"github.com/amirhnajafiz/elk-operator/internal/controllers/elkuser"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -89,14 +90,14 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controllers.ElkClusterReconciler{
+	if err = (&elkcluster.Reconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "ElkCluster")
 		os.Exit(1)
 	}
-	if err = (&controllers.ElkUserReconciler{
+	if err = (&elkuser.Reconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {

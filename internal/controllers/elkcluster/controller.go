@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package controllers
+package elkcluster
 
 import (
 	"context"
+	v1 "k8s.io/api/core/v1"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -27,40 +28,42 @@ import (
 	monitoringv1alpha1 "github.com/amirhnajafiz/elk-operator/api/v1alpha1"
 )
 
-// ElkUserReconciler reconciles a ElkUser object
-type ElkUserReconciler struct {
+// Reconciler reconciles a ElkCluster object
+type Reconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
 }
 
-//+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkusers,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkusers/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkusers/finalizers,verbs=update
+//+kubebuilder:rbac:groups=core,resources=pods,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkclusters,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkclusters/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkclusters/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
-// TODO(user): Modify the Reconcile function to compare the state specified by
-// the ElkUser object against the actual cluster state, and then
+// Modify the Reconcile function to compare the state specified by
+// the ElkCluster object against the actual cluster state, and then
 // perform operations to make the cluster state reflect the state specified by
 // the user.
 //
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.12.2/pkg/reconcile
-func (r *ElkUserReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
 	// TODO(user): your logic here
-	// TODO: get user
-	// TODO: if deleted => remove from database
-	// TODO: if existed => prevent
-	// TODO: if not create a new user and insert it into db
+	// TODO: get elk cluster resource
+	// TODO: if deleted (clean up) => remove users from db, remove manifests
+	// TODO: check if exists (prevent creating)
+	// TODO: create Elk clusters with Kibana
 
 	return ctrl.Result{}, nil
 }
 
 // SetupWithManager sets up the controller with the Manager.
-func (r *ElkUserReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (r *Reconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&monitoringv1alpha1.ElkUser{}).
+		For(&monitoringv1alpha1.ElkCluster{}).
+		Owns(&v1.Pod{}).
 		Complete(r)
 }
