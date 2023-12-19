@@ -18,6 +18,7 @@ package controllers
 
 import (
 	"context"
+	v1 "k8s.io/api/core/v1"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -33,13 +34,14 @@ type ElkClusterReconciler struct {
 	Scheme *runtime.Scheme
 }
 
+//+kubebuilder:rbac:groups=core,resources=pods,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkclusters,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkclusters/status,verbs=get;update;patch
 //+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkclusters/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
-// TODO(user): Modify the Reconcile function to compare the state specified by
+// Modify the Reconcile function to compare the state specified by
 // the ElkCluster object against the actual cluster state, and then
 // perform operations to make the cluster state reflect the state specified by
 // the user.
@@ -58,5 +60,6 @@ func (r *ElkClusterReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 func (r *ElkClusterReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&monitoringv1alpha1.ElkCluster{}).
+		Owns(&v1.Pod{}).
 		Complete(r)
 }
