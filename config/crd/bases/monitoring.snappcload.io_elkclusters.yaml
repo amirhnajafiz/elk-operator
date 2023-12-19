@@ -35,10 +35,14 @@ spec:
           spec:
             description: ElkClusterSpec defines the desired state of ElkCluster
             properties:
-              foo:
-                description: Foo is an example field of ElkCluster. Edit elkcluster_types.go
-                  to remove/update
-                type: string
+              dashboard:
+                description: Dashboard is a flag to create a Kibana dashboard
+                type: boolean
+              replica:
+                description: Replicas is the number of Elasticsearch clusters
+                maximum: 3
+                minimum: 1
+                type: integer
             type: object
           status:
             description: ElkClusterStatus defines the observed state of ElkCluster

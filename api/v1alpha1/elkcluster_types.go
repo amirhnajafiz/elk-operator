@@ -28,10 +28,10 @@ type ElkClusterSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Replica is the number of Elasticsearch clusters
+	// Replicas is the number of Elasticsearch clusters
 	// +kubebuilder:validation:Maximum:=3
 	// +kubebuilder:validation:Minimum:=1
-	Replica int `json:"replica,omitempty"`
+	Replicas int `json:"replica,omitempty"`
 
 	// Dashboard is a flag to create a Kibana dashboard
 	// +kubebuilder:validation:Optional

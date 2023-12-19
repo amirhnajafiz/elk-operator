@@ -35,9 +35,20 @@ spec:
           spec:
             description: ElkUserSpec defines the desired state of ElkUser
             properties:
-              foo:
-                description: Foo is an example field of ElkUser. Edit elkuser_types.go
-                  to remove/update
+              password:
+                description: Password of the Elk cluster user
+                maxLength: 16
+                minLength: 8
+                type: string
+              role:
+                description: Role of the Elk cluster user
+                enum:
+                - Admin
+                - Dev
+                type: string
+              username:
+                description: Username of the Elk cluster user
+                maxLength: 16
                 type: string
             type: object
           status:
