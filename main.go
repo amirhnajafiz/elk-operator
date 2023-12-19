@@ -32,7 +32,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	monitoringv1alpha1 "github.com/amirhnajafiz/elk-operator/api/v1alpha1"
-	"github.com/amirhnajafiz/elk-operator/controllers"
+	"github.com/amirhnajafiz/elk-operator/internal/controllers"
 	//+kubebuilder:scaffold:imports
 )
 
