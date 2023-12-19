@@ -28,8 +28,11 @@ type ElkClusterSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of ElkCluster. Edit elkcluster_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// Replica is the number of Elasticsearch clusters
+	Replica int `json:"replica,omitempty"`
+
+	// Dashboard is a flag to create a Kibana dashboard
+	Dashboard bool `json:"dashboard,omitempty"`
 }
 
 // ElkClusterStatus defines the observed state of ElkCluster
