@@ -50,6 +50,10 @@ func (r *ElkUserReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 	_ = log.FromContext(ctx)
 
 	// TODO(user): your logic here
+	// TODO: get user
+	// TODO: if deleted => remove from database
+	// TODO: if existed => prevent
+	// TODO: if not create a new user and insert it into db
 
 	return ctrl.Result{}, nil
 }
