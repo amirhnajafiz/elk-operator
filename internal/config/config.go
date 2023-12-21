@@ -1,14 +1,16 @@
 package config
 
 import (
+	"log"
+	"strings"
+
 	"github.com/amirhnajafiz/elk-operator/internal/storage"
+
 	"github.com/knadh/koanf"
 	"github.com/knadh/koanf/parsers/yaml"
 	"github.com/knadh/koanf/providers/env"
 	"github.com/knadh/koanf/providers/file"
 	"github.com/knadh/koanf/providers/structs"
-	"log"
-	"strings"
 )
 
 const (
