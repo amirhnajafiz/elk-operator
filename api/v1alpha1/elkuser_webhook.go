@@ -58,7 +58,12 @@ var _ webhook.Validator = &ElkUser{}
 func (r *ElkUser) ValidateCreate() error {
 	elkuserlog.Info("validate create", "name", r.Name)
 
-	// TODO(user): fill in your validation logic upon object creation.
+	if flag, err := r.userExists(); err != nil {
+		return err
+	} else if flag {
+		return ErrUsernameExists
+	}
+
 	return nil
 }
 
@@ -66,7 +71,12 @@ func (r *ElkUser) ValidateCreate() error {
 func (r *ElkUser) ValidateUpdate(old runtime.Object) error {
 	elkuserlog.Info("validate update", "name", r.Name)
 
-	// TODO(user): fill in your validation logic upon object update.
+	if flag, err := r.userExists(); err != nil {
+		return err
+	} else if flag {
+		return ErrUsernameExists
+	}
+
 	return nil
 }
 
@@ -74,7 +84,12 @@ func (r *ElkUser) ValidateUpdate(old runtime.Object) error {
 func (r *ElkUser) ValidateDelete() error {
 	elkuserlog.Info("validate delete", "name", r.Name)
 
-	// TODO(user): fill in your validation logic upon object deletion.
+	if flag, err := r.userExists(); err != nil {
+		return err
+	} else if !flag {
+		return ErrUserNotFound
+	}
+
 	return nil
 }
 
