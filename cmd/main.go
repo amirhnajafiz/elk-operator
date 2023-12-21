@@ -19,6 +19,7 @@ package main
 import (
 	"flag"
 	"os"
+	"time"
 
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	// to ensure that exec-entrypoint and run can make use of them.
@@ -36,6 +37,7 @@ import (
 	"github.com/amirhnajafiz/elk-operator/internal/controllers/elkcluster"
 	"github.com/amirhnajafiz/elk-operator/internal/controllers/elkuser"
 	"github.com/amirhnajafiz/elk-operator/internal/storage"
+	"github.com/amirhnajafiz/elk-operator/internal/worker"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -137,6 +139,14 @@ func main() {
 	if err := mgr.AddReadyzCheck("readyz", healthz.Ping); err != nil {
 		setupLog.Error(err, "unable to set up ready check")
 		os.Exit(1)
+	}
+
+	if cfg.Worker.Enable {
+		go worker.Worker{
+			DB:       db,
+			Logger:   mgr.GetLogger().WithName("worker"),
+			Interval: time.Duration(cfg.Worker.Interval) * time.Second,
+		}.Do()
 	}
 
 	setupLog.Info("starting manager")

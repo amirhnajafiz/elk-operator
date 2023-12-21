@@ -4,13 +4,13 @@ import (
 	"database/sql"
 	"time"
 
-	"go.uber.org/zap"
+	"github.com/go-logr/logr"
 )
 
 type Worker struct {
 	Interval time.Duration
 	DB       *sql.DB
-	Logger   *zap.Logger
+	Logger   logr.Logger
 }
 
 func (w Worker) Do() {
@@ -18,7 +18,7 @@ func (w Worker) Do() {
 
 	for {
 		if _, err := w.DB.Query("delete from users where deleted_at is not null"); err != nil {
-			w.Logger.Error("failed to run delete query", zap.Error(err))
+			w.Logger.Error(err, "failed to run delete query")
 		}
 
 		time.Sleep(w.Interval)

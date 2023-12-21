@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/amirhnajafiz/elk-operator/internal/worker"
 	"log"
 	"strings"
 
@@ -20,6 +21,7 @@ const (
 
 type Config struct {
 	Database storage.Config `koanf:"database"`
+	Worker   worker.Config  `koanf:"worker"`
 }
 
 func New(path string) Config {
