@@ -2,6 +2,7 @@ package elkuser
 
 import (
 	"context"
+	"database/sql"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -13,6 +14,8 @@ import (
 type Reconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
+
+	DB *sql.DB
 }
 
 //+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkusers,verbs=get;list;watch;create;update;patch;delete
