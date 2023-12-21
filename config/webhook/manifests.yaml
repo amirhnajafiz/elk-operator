@@ -11,6 +11,26 @@ webhooks:
     service:
       name: webhook-service
       namespace: system
+      path: /mutate-monitoring-snappcload-io-v1alpha1-elkcluster
+  failurePolicy: Fail
+  name: melkcluster.kb.io
+  rules:
+  - apiGroups:
+    - monitoring.snappcload.io
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - elkclusters
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
       path: /mutate-monitoring-snappcload-io-v1alpha1-elkuser
   failurePolicy: Fail
   name: melkuser.kb.io
@@ -32,6 +52,26 @@ metadata:
   creationTimestamp: null
   name: validating-webhook-configuration
 webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
+      path: /validate-monitoring-snappcload-io-v1alpha1-elkcluster
+  failurePolicy: Fail
+  name: velkcluster.kb.io
+  rules:
+  - apiGroups:
+    - monitoring.snappcload.io
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - elkclusters
+  sideEffects: None
 - admissionReviewVersions:
   - v1
   clientConfig:

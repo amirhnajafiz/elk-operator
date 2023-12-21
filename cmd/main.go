@@ -42,13 +42,9 @@ import (
 var (
 	scheme   = runtime.NewScheme()
 	setupLog = ctrl.Log.WithName("setup")
-
-	cfg config.Config
 )
 
 func init() {
-	cfg = config.New("config.yml")
-
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 	utilruntime.Must(monitoringv1alpha1.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
@@ -71,6 +67,8 @@ func main() {
 	opts.BindFlags(flag.CommandLine)
 
 	flag.Parse()
+
+	cfg := config.New("config.yml")
 
 	db, err := storage.OpenConnection(cfg.Database)
 	if err != nil {
@@ -125,6 +123,10 @@ func main() {
 		os.Exit(1)
 	}
 
+	if err = (&monitoringv1alpha1.ElkCluster{}).SetupWebhookWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create webhook", "webhook", "ElkCluster")
+		os.Exit(1)
+	}
 	//+kubebuilder:scaffold:builder
 
 	if err := mgr.AddHealthzCheck("healthz", healthz.Ping); err != nil {
