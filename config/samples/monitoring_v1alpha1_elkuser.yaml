@@ -3,4 +3,6 @@ kind: ElkUser
 metadata:
   name: elkuser-sample
 spec:
-  # TODO(user): Add fields here
+  username: ""
+  password: ""
+  role: ""

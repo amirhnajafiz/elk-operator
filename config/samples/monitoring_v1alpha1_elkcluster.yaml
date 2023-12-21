@@ -3,4 +3,5 @@ kind: ElkCluster
 metadata:
   name: elkcluster-sample
 spec:
-  # TODO(user): Add fields here
+  replicas: 3
+  dashboard: true
