@@ -17,9 +17,8 @@ limitations under the License.
 package elkcluster
 
 import (
-	v1 "k8s.io/api/core/v1"
-
 	monitoringv1alpha1 "github.com/amirhnajafiz/elk-operator/api/v1alpha1"
+	"k8s.io/api/apps/v1beta1"
 	ctrl "sigs.k8s.io/controller-runtime"
 )
 
@@ -27,6 +26,6 @@ import (
 func (r *Reconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&monitoringv1alpha1.ElkCluster{}).
-		Owns(&v1.Pod{}).
+		Owns(&v1beta1.Deployment{}).
 		Complete(r)
 }

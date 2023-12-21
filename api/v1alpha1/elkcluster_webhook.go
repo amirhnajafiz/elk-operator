@@ -32,8 +32,6 @@ func (r *ElkCluster) SetupWebhookWithManager(mgr ctrl.Manager) error {
 		Complete()
 }
 
-// TODO(user): EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-
 //+kubebuilder:webhook:path=/mutate-monitoring-snappcload-io-v1alpha1-elkcluster,mutating=true,failurePolicy=fail,sideEffects=None,groups=monitoring.snappcload.io,resources=elkclusters,verbs=create;update,versions=v1alpha1,name=melkcluster.kb.io,admissionReviewVersions=v1
 
 var _ webhook.Defaulter = &ElkCluster{}
@@ -41,11 +39,8 @@ var _ webhook.Defaulter = &ElkCluster{}
 // Default implements webhook.Defaulter so a webhook will be registered for the type
 func (r *ElkCluster) Default() {
 	elkclusterlog.Info("default", "name", r.Name)
-
-	// TODO(user): fill in your defaulting logic.
 }
 
-// TODO(user): change verbs to "verbs=create;update;delete" if you want to enable deletion validation.
 //+kubebuilder:webhook:path=/validate-monitoring-snappcload-io-v1alpha1-elkcluster,mutating=false,failurePolicy=fail,sideEffects=None,groups=monitoring.snappcload.io,resources=elkclusters,verbs=create;update,versions=v1alpha1,name=velkcluster.kb.io,admissionReviewVersions=v1
 
 var _ webhook.Validator = &ElkCluster{}
@@ -54,7 +49,10 @@ var _ webhook.Validator = &ElkCluster{}
 func (r *ElkCluster) ValidateCreate() error {
 	elkclusterlog.Info("validate create", "name", r.Name)
 
-	// TODO(user): fill in your validation logic upon object creation.
+	if r.Spec.Replicas%2 != 1 {
+		return ErrReplicaNumber
+	}
+
 	return nil
 }
 
@@ -62,7 +60,10 @@ func (r *ElkCluster) ValidateCreate() error {
 func (r *ElkCluster) ValidateUpdate(old runtime.Object) error {
 	elkclusterlog.Info("validate update", "name", r.Name)
 
-	// TODO(user): fill in your validation logic upon object update.
+	if r.Spec.Replicas%2 != 1 {
+		return ErrReplicaNumber
+	}
+
 	return nil
 }
 
@@ -70,6 +71,5 @@ func (r *ElkCluster) ValidateUpdate(old runtime.Object) error {
 func (r *ElkCluster) ValidateDelete() error {
 	elkclusterlog.Info("validate delete", "name", r.Name)
 
-	// TODO(user): fill in your validation logic upon object deletion.
 	return nil
 }
