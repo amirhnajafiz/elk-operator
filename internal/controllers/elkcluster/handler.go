@@ -48,6 +48,10 @@ func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Resu
 	case err != nil:
 		r.logger.Error(err, "failed to fetch object")
 		return subreconciler.Evaluate(subreconciler.Requeue())
+	default:
+		if r.cluster.ObjectMeta.DeletionTimestamp != nil {
+			return r.Cleanup(ctx)
+		}
 	}
 
 	// TODO(user): your logic here
