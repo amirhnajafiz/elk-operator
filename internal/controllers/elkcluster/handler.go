@@ -11,6 +11,7 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
+	"sigs.k8s.io/controller-runtime/pkg/manager"
 
 	"github.com/amirhnajafiz/elk-operator/api/v1alpha1"
 )
@@ -20,7 +21,14 @@ type Reconciler struct {
 	client.Client
 	logger  logr.Logger
 	cluster *v1alpha1.ElkCluster
-	Scheme  *runtime.Scheme
+	scheme  *runtime.Scheme
+}
+
+func NewReconciler(mgr manager.Manager) *Reconciler {
+	return &Reconciler{
+		Client: mgr.GetClient(),
+		scheme: mgr.GetScheme(),
+	}
 }
 
 //+kubebuilder:rbac:groups=core,resources=pods,verbs=get;list;watch;create;update;patch;delete

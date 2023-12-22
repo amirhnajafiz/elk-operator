@@ -1,10 +1,11 @@
 package elkcluster
 
 import (
-	monitoringv1alpha1 "github.com/amirhnajafiz/elk-operator/api/v1alpha1"
 	"k8s.io/api/apps/v1beta1"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
+
+	monitoringv1alpha1 "github.com/amirhnajafiz/elk-operator/api/v1alpha1"
 )
 
 // SetupWithManager sets up the controller with the Manager.
