@@ -3,19 +3,32 @@ package elkuser
 import (
 	"context"
 	"database/sql"
+	"sigs.k8s.io/controller-runtime/pkg/manager"
 
+	"github.com/go-logr/logr"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
+
+	"github.com/amirhnajafiz/elk-operator/api/v1alpha1"
 )
 
 // Reconciler reconciles a ElkUser object
 type Reconciler struct {
 	client.Client
-	Scheme *runtime.Scheme
+	logger logr.Logger
+	user   *v1alpha1.ElkUser
+	scheme *runtime.Scheme
+	db     *sql.DB
+}
 
-	DB *sql.DB
+func NewReconciler(mgr manager.Manager, db *sql.DB) *Reconciler {
+	return &Reconciler{
+		Client: mgr.GetClient(),
+		scheme: mgr.GetScheme(),
+		db:     db,
+	}
 }
 
 //+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkusers,verbs=get;list;watch;create;update;patch;delete
@@ -24,13 +37,6 @@ type Reconciler struct {
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
-// Modify the Reconcile function to compare the state specified by
-// the ElkUser object against the actual cluster state, and then
-// perform operations to make the cluster state reflect the state specified by
-// the user.
-//
-// For more details, check Reconcile and its Result here:
-// - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.12.2/pkg/reconcile
 func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 

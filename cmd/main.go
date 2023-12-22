@@ -65,6 +65,7 @@ func main() {
 
 	ctrl.SetLogger(zap.New(zap.UseFlagOptions(&opts)))
 
+	// create manager instance
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:                 scheme,
 		MetricsBindAddress:     metricsAddr,
@@ -78,20 +79,18 @@ func main() {
 		os.Exit(1)
 	}
 
+	// create reconciler instances
 	if err = elkcluster.NewReconciler(mgr).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "ElkCluster")
 		os.Exit(1)
 	}
 
-	if err = (&elkuser.Reconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-		DB:     db,
-	}).SetupWithManager(mgr); err != nil {
+	if err = elkuser.NewReconciler(mgr, db).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "ElkUser")
 		os.Exit(1)
 	}
 
+	// create webhook instances
 	if err = (&monitoringv1alpha1.ElkUser{}).SetupWebhookWithManager(mgr, db); err != nil {
 		setupLog.Error(err, "unable to create webhook", "webhook", "ElkUser")
 		os.Exit(1)
