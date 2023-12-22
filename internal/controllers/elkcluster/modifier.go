@@ -1,7 +1,12 @@
 package elkcluster
 
-import "github.com/amirhnajafiz/elk-operator/api/v1alpha1"
+import (
+	"context"
 
-func (r *Reconciler) update(cluster *v1alpha1.ElkCluster) error {
-	return nil
+	"github.com/opdev/subreconciler"
+	ctrl "sigs.k8s.io/controller-runtime"
+)
+
+func (r *Reconciler) Modify(ctx context.Context) (ctrl.Result, error) {
+	return subreconciler.Evaluate(subreconciler.DoNotRequeue())
 }
