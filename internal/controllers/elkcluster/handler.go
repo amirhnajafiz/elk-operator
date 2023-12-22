@@ -51,8 +51,5 @@ func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Resu
 		}
 	}
 
-	// TODO: if deleted (clean up) => remove users from db, remove manifests
-	// TODO: create Elk clusters with Kibana
-
-	return ctrl.Result{}, nil
+	return r.Provision(ctx)
 }
