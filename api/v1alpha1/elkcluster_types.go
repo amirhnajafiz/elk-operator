@@ -40,8 +40,9 @@ type ElkClusterSpec struct {
 
 // ElkClusterStatus defines the observed state of ElkCluster
 type ElkClusterStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default=false
+	Created bool `json:"created,omitempty"`
 }
 
 //+kubebuilder:object:root=true
