@@ -2,6 +2,7 @@ package elkcluster
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/opdev/subreconciler"
 	v1 "k8s.io/api/apps/v1"
@@ -9,6 +10,7 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 )
 
+// Provision is the handler for create and update requests
 func (r *Reconciler) Provision(ctx context.Context) (ctrl.Result, error) {
 	if r.cluster.Status.Created {
 		return r.Modify(ctx)
@@ -17,9 +19,12 @@ func (r *Reconciler) Provision(ctx context.Context) (ctrl.Result, error) {
 	return subreconciler.Evaluate(subreconciler.DoNotRequeue())
 }
 
-func (r *Reconciler) getElasticsearchDeployment() *v1.Deployment {
+// get the deployment file of elk cluster
+func (r *Reconciler) getElkDeployment() *v1.Deployment {
+	// cluster replicas
 	replicas := int32(r.cluster.Spec.Replicas)
 
+	// cluster ports
 	ports := []core.ContainerPort{
 		{
 			HostPort:      9200,
@@ -39,6 +44,7 @@ func (r *Reconciler) getElasticsearchDeployment() *v1.Deployment {
 		},
 	}
 
+	// Kibana dashboard expose
 	if r.cluster.Spec.Dashboard {
 		ports = append(ports, core.ContainerPort{
 			HostPort:      5601,
@@ -47,6 +53,12 @@ func (r *Reconciler) getElasticsearchDeployment() *v1.Deployment {
 	}
 
 	return &v1.Deployment{
+		ObjectMeta: ctrl.ObjectMeta{
+			Name:        fmt.Sprintf("%s-deployment", r.cluster.Name),
+			Namespace:   r.cluster.Namespace,
+			Labels:      r.cluster.Labels,
+			Annotations: r.cluster.Annotations,
+		},
 		Spec: v1.DeploymentSpec{
 			Replicas: &replicas,
 			Template: core.PodTemplateSpec{
