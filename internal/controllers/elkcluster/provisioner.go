@@ -8,12 +8,37 @@ import (
 	v1 "k8s.io/api/apps/v1"
 	core "k8s.io/api/core/v1"
 	ctrl "sigs.k8s.io/controller-runtime"
+	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 )
 
 // Provision is the handler for create and update requests
 func (r *Reconciler) Provision(ctx context.Context) (ctrl.Result, error) {
-	if r.cluster.Status.Created {
+	if r.cluster.Status.Created { // update
 		return r.Modify(ctx)
+	}
+
+	// create deployment
+	deployment := r.getElkDeployment()
+
+	if err := controllerutil.SetControllerReference(r.cluster, deployment, r.scheme); err != nil {
+		r.logger.Error(err, "failed to own the deployment")
+
+		return subreconciler.Evaluate(subreconciler.Requeue())
+	}
+
+	if err := r.Create(ctx, deployment); err != nil {
+		r.logger.Error(err, "failed to create a deployment")
+
+		return subreconciler.Evaluate(subreconciler.Requeue())
+	}
+
+	// update status
+	r.cluster.Status.Created = true
+
+	if err := r.Update(ctx, r.cluster); err != nil {
+		r.logger.Error(err, "failed to update the resource")
+
+		return subreconciler.Evaluate(subreconciler.Requeue())
 	}
 
 	return subreconciler.Evaluate(subreconciler.DoNotRequeue())
