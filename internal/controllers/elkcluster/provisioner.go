@@ -5,6 +5,7 @@ import (
 
 	"github.com/opdev/subreconciler"
 	v1 "k8s.io/api/apps/v1"
+	core "k8s.io/api/core/v1"
 	ctrl "sigs.k8s.io/controller-runtime"
 )
 
@@ -17,7 +18,14 @@ func (r *Reconciler) Provision(ctx context.Context) (ctrl.Result, error) {
 }
 
 func (r *Reconciler) getElasticsearchDeployment() *v1.Deployment {
-	return nil
+	replicas := int32(r.cluster.Spec.Replicas)
+
+	return &v1.Deployment{
+		Spec: v1.DeploymentSpec{
+			Replicas: &replicas,
+			Template: core.PodTemplateSpec{},
+		},
+	}
 }
 
 func (r *Reconciler) getKibanaDeployment() *v1.Deployment {
