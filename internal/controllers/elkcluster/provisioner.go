@@ -20,14 +20,45 @@ func (r *Reconciler) Provision(ctx context.Context) (ctrl.Result, error) {
 func (r *Reconciler) getElasticsearchDeployment() *v1.Deployment {
 	replicas := int32(r.cluster.Spec.Replicas)
 
+	ports := []core.ContainerPort{
+		{
+			HostPort:      9200,
+			ContainerPort: 9200,
+		},
+		{
+			HostPort:      5044,
+			ContainerPort: 5044,
+		},
+		{
+			HostPort:      9300,
+			ContainerPort: 9300,
+		},
+		{
+			HostPort:      9600,
+			ContainerPort: 9600,
+		},
+	}
+
+	if r.cluster.Spec.Dashboard {
+		ports = append(ports, core.ContainerPort{
+			HostPort:      5601,
+			ContainerPort: 5601,
+		})
+	}
+
 	return &v1.Deployment{
 		Spec: v1.DeploymentSpec{
 			Replicas: &replicas,
-			Template: core.PodTemplateSpec{},
+			Template: core.PodTemplateSpec{
+				Spec: core.PodSpec{
+					Containers: []core.Container{
+						{
+							Image: "sebp/elk:latest",
+							Ports: ports,
+						},
+					},
+				},
+			},
 		},
 	}
-}
-
-func (r *Reconciler) getKibanaDeployment() *v1.Deployment {
-	return nil
 }
