@@ -28,5 +28,5 @@ func (u *UsersQuery) QueryInsert() string {
 }
 
 func (u *UsersQuery) QueryDelete() string {
-	return fmt.Sprintf("DELETE FROM %s WHERE username='%s'", u.Table(), u.Username)
+	return fmt.Sprintf("UPDATE %s SET deleted_at = now() WHERE username='%s'", u.Table(), u.Username)
 }
