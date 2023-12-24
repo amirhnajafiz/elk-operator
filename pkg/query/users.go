@@ -27,17 +27,6 @@ func (u *UsersQuery) QueryInsert() string {
 	)
 }
 
-func (u *UsersQuery) QueryUpdate(old *UsersQuery) string {
-	return fmt.Sprintf(
-		"UPDATE %s SET username='%s', roles='%s', clusters='%s' WHERE username='%s';",
-		u.Table(),
-		u.Username,
-		strings.Join(u.Roles, ";"),
-		strings.Join(u.Clusters, ";"),
-		old.Username,
-	)
-}
-
 func (u *UsersQuery) QueryDelete() string {
 	return fmt.Sprintf("DELETE FROM %s WHERE username='%s'", u.Table(), u.Username)
 }
