@@ -25,3 +25,7 @@ func queryUpdateUser(old, username, roles, clusters string) string {
 		old,
 	)
 }
+
+func queryDeleteUser(username string) string {
+	return fmt.Sprintf("DELETE FROM %s WHERE username='%s'", UsersTable, username)
+}
