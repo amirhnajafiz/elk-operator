@@ -7,5 +7,4 @@ spec:
   password: ""
   roles:
     - ""
-  clusters:
-    - ""
+  clusters: ""
