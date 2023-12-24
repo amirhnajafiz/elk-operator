@@ -18,7 +18,7 @@ func (u *UsersQuery) Table() string {
 	return "users"
 }
 
-func (u *UsersQuery) queryInsertUser() string {
+func (u *UsersQuery) queryInsert() string {
 	return fmt.Sprintf(
 		"INSERT INTO %s (username, password, roles, clusters) VALUES ('%s', '%s', '%s', '%s');",
 		u.Table(),
@@ -29,7 +29,7 @@ func (u *UsersQuery) queryInsertUser() string {
 	)
 }
 
-func (u *UsersQuery) queryUpdateUser(old *UsersQuery) string {
+func (u *UsersQuery) queryUpdate(old *UsersQuery) string {
 	return fmt.Sprintf(
 		"UPDATE %s SET username='%s', roles='%s', clusters='%s' WHERE username='%s';",
 		u.Table(),
@@ -40,6 +40,10 @@ func (u *UsersQuery) queryUpdateUser(old *UsersQuery) string {
 	)
 }
 
-func (u *UsersQuery) queryDeleteUser() string {
+func (u *UsersQuery) queryDelete() string {
 	return fmt.Sprintf("DELETE FROM %s WHERE username='%s'", u.Table(), u.Username)
+}
+
+func (u *UsersQuery) querySelect() string {
+	return fmt.Sprintf("SELECT * FROM %s WHERE username='%s'", u.Table(), u.Username)
 }
