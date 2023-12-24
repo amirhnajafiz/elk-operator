@@ -47,7 +47,7 @@ func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Resu
 	case apierrors.IsNotFound(err):
 		// resource not found
 		r.logger.Info(fmt.Sprintf("ElkCluster %s in namespace %s not found!", req.Name, req.Namespace))
-		return ctrl.Result{}, nil
+		return subreconciler.Evaluate(subreconciler.DoNotRequeue())
 	case err != nil:
 		// error in fetch
 		r.logger.Error(err, "failed to fetch object")
