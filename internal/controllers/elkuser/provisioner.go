@@ -2,7 +2,6 @@ package elkuser
 
 import (
 	"context"
-
 	"github.com/opdev/subreconciler"
 	ctrl "sigs.k8s.io/controller-runtime"
 
@@ -16,9 +15,10 @@ func (r *Reconciler) Provision(ctx context.Context) (ctrl.Result, error) {
 		Username: r.user.Spec.Username,
 		Password: crypto.Hash(r.user.Spec.Password),
 		Roles:    r.user.Spec.Roles,
-		Clusters: r.user.Spec.Clusters,
+		Cluster:  r.user.Spec.Cluster,
 	}
 
+	r.user.Annotations["cluster"] = user.Cluster
 	r.user.Status.Created = true
 	r.user.Spec.Password = user.Password
 

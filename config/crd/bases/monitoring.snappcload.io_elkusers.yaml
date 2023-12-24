@@ -35,11 +35,9 @@ spec:
           spec:
             description: ElkUserSpec defines the desired state of ElkUser
             properties:
-              clusters:
-                description: Clusters to register access for Elk user
-                items:
-                  type: string
-                type: array
+              cluster:
+                description: Cluster to register access for Elk user
+                type: string
               password:
                 description: Password of the Elk user
                 maxLength: 16

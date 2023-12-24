@@ -8,8 +8,8 @@ import (
 type UsersQuery struct {
 	Username string
 	Password string
+	Cluster  string
 	Roles    []string
-	Clusters []string
 }
 
 func (u *UsersQuery) Table() string {
@@ -18,12 +18,12 @@ func (u *UsersQuery) Table() string {
 
 func (u *UsersQuery) QueryInsert() string {
 	return fmt.Sprintf(
-		"INSERT INTO %s (username, password, roles, clusters) VALUES ('%s', '%s', '%s', '%s');",
+		"INSERT INTO %s (username, password, roles, cluster) VALUES ('%s', '%s', '%s', '%s');",
 		u.Table(),
 		u.Username,
 		u.Password,
 		strings.Join(u.Roles, ";"),
-		strings.Join(u.Clusters, ";"),
+		u.Cluster,
 	)
 }
 

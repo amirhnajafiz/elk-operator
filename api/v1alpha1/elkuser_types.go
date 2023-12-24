@@ -18,8 +18,8 @@ type ElkUserSpec struct {
 	// Roles of the Elk user
 	Roles []string `json:"roles,omitempty"`
 
-	// Clusters to register access for Elk user
-	Clusters []string `json:"clusters,omitempty"`
+	// Cluster to register access for Elk user
+	Cluster string `json:"cluster,omitempty"`
 }
 
 // ElkUserStatus defines the observed state of ElkUser
