@@ -2,7 +2,36 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
   annotations:
-    alm-examples: '[]'
+    alm-examples: |-
+      [
+        {
+          "apiVersion": "monitoring.snappcloud.io/v1alpha1",
+          "kind": "ElkCluster",
+          "metadata": {
+            "name": "elkcluster-sample1"
+          },
+          "spec": {
+            "dashboard": true,
+            "ingress": "",
+            "replicas": 3
+          }
+        },
+        {
+          "apiVersion": "monitoring.snappcloud.io/v1alpha1",
+          "kind": "ElkUser",
+          "metadata": {
+            "name": "elkuser-sample1"
+          },
+          "spec": {
+            "clusters": "",
+            "password": "",
+            "roles": [
+              ""
+            ],
+            "username": ""
+          }
+        }
+      ]
     capabilities: Basic Install
     operators.operatorframework.io/builder: operator-sdk-v1.23.0
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
@@ -10,7 +39,18 @@ metadata:
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
-  customresourcedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - description: ElkCluster is the Schema for the elkclusters API
+      displayName: Elk Cluster
+      kind: ElkCluster
+      name: elkclusters.monitoring.snappcloud.io
+      version: v1alpha1
+    - description: ElkUser is the Schema for the elkusers API
+      displayName: Elk User
+      kind: ElkUser
+      name: elkusers.monitoring.snappcloud.io
+      version: v1alpha1
   description: A kubernetes operator for Elasticsearch, Logstash, and Kibana
   displayName: elk-operator
   icon:
@@ -18,7 +58,216 @@ spec:
     mediatype: ""
   install:
     spec:
-      deployments: []
+      clusterPermissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - pods
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - monitoring.snappcloud.io
+          resources:
+          - elkclusters
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - monitoring.snappcloud.io
+          resources:
+          - elkclusters/finalizers
+          verbs:
+          - update
+        - apiGroups:
+          - monitoring.snappcloud.io
+          resources:
+          - elkclusters/status
+          verbs:
+          - get
+          - patch
+          - update
+        - apiGroups:
+          - monitoring.snappcloud.io
+          resources:
+          - elkusers
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - monitoring.snappcloud.io
+          resources:
+          - elkusers/finalizers
+          verbs:
+          - update
+        - apiGroups:
+          - monitoring.snappcloud.io
+          resources:
+          - elkusers/status
+          verbs:
+          - get
+          - patch
+          - update
+        - apiGroups:
+          - authentication.k8s.io
+          resources:
+          - tokenreviews
+          verbs:
+          - create
+        - apiGroups:
+          - authorization.k8s.io
+          resources:
+          - subjectaccessreviews
+          verbs:
+          - create
+        serviceAccountName: elk-operator-controller-manager
+      deployments:
+      - label:
+          control-plane: controller-manager
+        name: elk-operator-controller-manager
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              control-plane: controller-manager
+          strategy: {}
+          template:
+            metadata:
+              annotations:
+                kubectl.kubernetes.io/default-container: manager
+              labels:
+                control-plane: controller-manager
+            spec:
+              affinity:
+                nodeAffinity:
+                  requiredDuringSchedulingIgnoredDuringExecution:
+                    nodeSelectorTerms:
+                    - matchExpressions:
+                      - key: kubernetes.io/arch
+                        operator: In
+                        values:
+                        - amd64
+                        - arm64
+                        - ppc64le
+                        - s390x
+                      - key: kubernetes.io/os
+                        operator: In
+                        values:
+                        - linux
+              containers:
+              - args:
+                - --secure-listen-address=0.0.0.0:8443
+                - --upstream=http://127.0.0.1:8080/
+                - --logtostderr=true
+                - --v=0
+                image: gcr.io/kubebuilder/kube-rbac-proxy:v0.13.0
+                name: kube-rbac-proxy
+                ports:
+                - containerPort: 8443
+                  name: https
+                  protocol: TCP
+                resources:
+                  limits:
+                    cpu: 500m
+                    memory: 128Mi
+                  requests:
+                    cpu: 5m
+                    memory: 64Mi
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  capabilities:
+                    drop:
+                    - ALL
+              - args:
+                - --health-probe-bind-address=:8081
+                - --metrics-bind-address=127.0.0.1:8080
+                - --leader-elect
+                command:
+                - /manager
+                image: monitoring.snappcloud.io/elk-operator:v0.0.1
+                livenessProbe:
+                  httpGet:
+                    path: /healthz
+                    port: 8081
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
+                name: manager
+                ports:
+                - containerPort: 9443
+                  name: webhook-server
+                  protocol: TCP
+                readinessProbe:
+                  httpGet:
+                    path: /readyz
+                    port: 8081
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
+                resources:
+                  limits:
+                    cpu: 500m
+                    memory: 128Mi
+                  requests:
+                    cpu: 10m
+                    memory: 64Mi
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  capabilities:
+                    drop:
+                    - ALL
+              securityContext:
+                runAsNonRoot: true
+              serviceAccountName: elk-operator-controller-manager
+              terminationGracePeriodSeconds: 10
+      permissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - configmaps
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - update
+          - patch
+          - delete
+        - apiGroups:
+          - coordination.k8s.io
+          resources:
+          - leases
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - update
+          - patch
+          - delete
+        - apiGroups:
+          - ""
+          resources:
+          - events
+          verbs:
+          - create
+          - patch
+        serviceAccountName: elk-operator-controller-manager
     strategy: deployment
   installModes:
   - supported: false
@@ -47,3 +296,96 @@ spec:
     name: amirhossein.najafizadeh
     url: amirhnajafiz.github.io
   version: 0.0.1
+  webhookdefinitions:
+  - admissionReviewVersions:
+    - v1
+    containerPort: 443
+    conversionCRDs:
+    - elkclusters.monitoring.snappcloud.io
+    - elkusers.monitoring.snappcloud.io
+    deploymentName: elk-operator-controller-manager
+    generateName: celkclusterselkusers.kb.io
+    sideEffects: None
+    targetPort: 9443
+    type: ConversionWebhook
+    webhookPath: /convert
+  - admissionReviewVersions:
+    - v1
+    containerPort: 443
+    deploymentName: elk-operator-controller-manager
+    failurePolicy: Fail
+    generateName: melkcluster.kb.io
+    rules:
+    - apiGroups:
+      - monitoring.snappcloud.io
+      apiVersions:
+      - v1alpha1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - elkclusters
+    sideEffects: None
+    targetPort: 9443
+    type: MutatingAdmissionWebhook
+    webhookPath: /mutate-monitoring-snappcloud-io-v1alpha1-elkcluster
+  - admissionReviewVersions:
+    - v1
+    containerPort: 443
+    deploymentName: elk-operator-controller-manager
+    failurePolicy: Fail
+    generateName: melkuser.kb.io
+    rules:
+    - apiGroups:
+      - monitoring.snappcloud.io
+      apiVersions:
+      - v1alpha1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - elkusers
+    sideEffects: None
+    targetPort: 9443
+    type: MutatingAdmissionWebhook
+    webhookPath: /mutate-monitoring-snappcloud-io-v1alpha1-elkuser
+  - admissionReviewVersions:
+    - v1
+    containerPort: 443
+    deploymentName: elk-operator-controller-manager
+    failurePolicy: Fail
+    generateName: velkcluster.kb.io
+    rules:
+    - apiGroups:
+      - monitoring.snappcloud.io
+      apiVersions:
+      - v1alpha1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - elkclusters
+    sideEffects: None
+    targetPort: 9443
+    type: ValidatingAdmissionWebhook
+    webhookPath: /validate-monitoring-snappcloud-io-v1alpha1-elkcluster
+  - admissionReviewVersions:
+    - v1
+    containerPort: 443
+    deploymentName: elk-operator-controller-manager
+    failurePolicy: Fail
+    generateName: velkuser.kb.io
+    rules:
+    - apiGroups:
+      - monitoring.snappcloud.io
+      apiVersions:
+      - v1alpha1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - elkusers
+    sideEffects: None
+    targetPort: 9443
+    type: ValidatingAdmissionWebhook
+    webhookPath: /validate-monitoring-snappcloud-io-v1alpha1-elkuser

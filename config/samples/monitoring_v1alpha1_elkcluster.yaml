@@ -1,7 +1,7 @@
 apiVersion: monitoring.snappcloud.io/v1alpha1
 kind: ElkCluster
 metadata:
-  name: elkcluster-sample
+  name: elkcluster-sample1
 spec:
   replicas: 3
   dashboard: true

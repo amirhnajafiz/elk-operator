@@ -1,7 +1,7 @@
 apiVersion: monitoring.snappcloud.io/v1alpha1
 kind: ElkUser
 metadata:
-  name: elkuser-sample
+  name: elkuser-sample1
 spec:
   username: ""
   password: ""
