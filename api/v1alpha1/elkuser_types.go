@@ -4,14 +4,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
-
 // ElkUserSpec defines the desired state of ElkUser
 type ElkUserSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-
 	// Username of the Elk user (must be unique)
 	// +kubebuilder:validation:MaxLength:=16
 	Username string `json:"username,omitempty"`
