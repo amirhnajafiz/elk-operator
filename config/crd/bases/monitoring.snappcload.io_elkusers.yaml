@@ -35,24 +35,32 @@ spec:
           spec:
             description: ElkUserSpec defines the desired state of ElkUser
             properties:
+              clusters:
+                description: Clusters to register access for Elk user
+                items:
+                  type: string
+                type: array
               password:
-                description: Password of the Elk cluster user
+                description: Password of the Elk user
                 maxLength: 16
                 minLength: 8
                 type: string
-              role:
-                description: Role of the Elk cluster user
-                enum:
-                - Admin
-                - Dev
-                type: string
+              roles:
+                description: Roles of the Elk user
+                items:
+                  type: string
+                type: array
               username:
-                description: Username of the Elk cluster user
+                description: Username of the Elk user (must be unique)
                 maxLength: 16
                 type: string
             type: object
           status:
             description: ElkUserStatus defines the observed state of ElkUser
+            properties:
+              created:
+                default: false
+                type: boolean
             type: object
         type: object
     served: true
