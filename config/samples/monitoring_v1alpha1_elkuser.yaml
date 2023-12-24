@@ -1,4 +1,4 @@
-apiVersion: monitoring.snappcload.io/v1alpha1
+apiVersion: monitoring.snappcloud.io/v1alpha1
 kind: ElkUser
 metadata:
   name: elkuser-sample

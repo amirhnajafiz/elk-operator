@@ -25,7 +25,7 @@ func (r *ElkUser) SetupWebhookWithManager(mgr ctrl.Manager, db *sql.DB) error {
 		Complete()
 }
 
-//+kubebuilder:webhook:path=/mutate-monitoring-snappcload-io-v1alpha1-elkuser,mutating=true,failurePolicy=fail,sideEffects=None,groups=monitoring.snappcload.io,resources=elkusers,verbs=create;update,versions=v1alpha1,name=melkuser.kb.io,admissionReviewVersions=v1
+//+kubebuilder:webhook:path=/mutate-monitoring-snappcloud-io-v1alpha1-elkuser,mutating=true,failurePolicy=fail,sideEffects=None,groups=monitoring.snappcloud.io,resources=elkusers,verbs=create;update,versions=v1alpha1,name=melkuser.kb.io,admissionReviewVersions=v1
 
 var _ webhook.Defaulter = &ElkUser{}
 
@@ -34,7 +34,7 @@ func (r *ElkUser) Default() {
 	elkuserlog.Info("default", "name", r.Name)
 }
 
-//+kubebuilder:webhook:path=/validate-monitoring-snappcload-io-v1alpha1-elkuser,mutating=false,failurePolicy=fail,sideEffects=None,groups=monitoring.snappcload.io,resources=elkusers,verbs=create;update,versions=v1alpha1,name=velkuser.kb.io,admissionReviewVersions=v1
+//+kubebuilder:webhook:path=/validate-monitoring-snappcloud-io-v1alpha1-elkuser,mutating=false,failurePolicy=fail,sideEffects=None,groups=monitoring.snappcloud.io,resources=elkusers,verbs=create;update,versions=v1alpha1,name=velkuser.kb.io,admissionReviewVersions=v1
 
 var _ webhook.Validator = &ElkUser{}
 

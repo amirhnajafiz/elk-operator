@@ -10,7 +10,7 @@ k8s manifests.
 ### Elk Cluster
 
 ```yaml
-apiVersion: monitoring.snappcload.io/v1alpha1
+apiVersion: monitoring.snappcloud.io/v1alpha1
 kind: ElkCluster
 metadata:
   name: elkcluster-sample
@@ -23,7 +23,7 @@ spec:
 ### Elk User
 
 ```yaml
-apiVersion: monitoring.snappcload.io/v1alpha1
+apiVersion: monitoring.snappcloud.io/v1alpha1
 kind: ElkUser
 metadata:
   name: elkuser-sample

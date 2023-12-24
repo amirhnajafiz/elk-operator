@@ -5,7 +5,7 @@ metadata:
   name: elkuser-editor-role
 rules:
 - apiGroups:
-  - monitoring.snappcload.io
+  - monitoring.snappcloud.io
   resources:
   - elkusers
   verbs:
@@ -17,7 +17,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - monitoring.snappcload.io
+  - monitoring.snappcloud.io
   resources:
   - elkusers/status
   verbs:

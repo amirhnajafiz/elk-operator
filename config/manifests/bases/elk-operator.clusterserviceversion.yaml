@@ -13,12 +13,12 @@ spec:
     - description: ElkCluster is the Schema for the elkclusters API
       displayName: Elk Cluster
       kind: ElkCluster
-      name: elkclusters.monitoring.snappcload.io
+      name: elkclusters.monitoring.snappcloud.io
       version: v1alpha1
     - description: ElkUser is the Schema for the elkusers API
       displayName: Elk User
       kind: ElkUser
-      name: elkusers.monitoring.snappcload.io
+      name: elkusers.monitoring.snappcloud.io
       version: v1alpha1
   description: A kubernetes operator for Elasticsearch, Logstash, and Kibana
   displayName: elk-operator

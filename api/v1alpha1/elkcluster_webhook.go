@@ -16,7 +16,7 @@ func (r *ElkCluster) SetupWebhookWithManager(mgr ctrl.Manager) error {
 		Complete()
 }
 
-//+kubebuilder:webhook:path=/mutate-monitoring-snappcload-io-v1alpha1-elkcluster,mutating=true,failurePolicy=fail,sideEffects=None,groups=monitoring.snappcload.io,resources=elkclusters,verbs=create;update,versions=v1alpha1,name=melkcluster.kb.io,admissionReviewVersions=v1
+//+kubebuilder:webhook:path=/mutate-monitoring-snappcloud-io-v1alpha1-elkcluster,mutating=true,failurePolicy=fail,sideEffects=None,groups=monitoring.snappcloud.io,resources=elkclusters,verbs=create;update,versions=v1alpha1,name=melkcluster.kb.io,admissionReviewVersions=v1
 
 var _ webhook.Defaulter = &ElkCluster{}
 
@@ -25,7 +25,7 @@ func (r *ElkCluster) Default() {
 	elkclusterlog.Info("default", "name", r.Name)
 }
 
-//+kubebuilder:webhook:path=/validate-monitoring-snappcload-io-v1alpha1-elkcluster,mutating=false,failurePolicy=fail,sideEffects=None,groups=monitoring.snappcload.io,resources=elkclusters,verbs=create;update,versions=v1alpha1,name=velkcluster.kb.io,admissionReviewVersions=v1
+//+kubebuilder:webhook:path=/validate-monitoring-snappcloud-io-v1alpha1-elkcluster,mutating=false,failurePolicy=fail,sideEffects=None,groups=monitoring.snappcloud.io,resources=elkclusters,verbs=create;update,versions=v1alpha1,name=velkcluster.kb.io,admissionReviewVersions=v1
 
 var _ webhook.Validator = &ElkCluster{}
 

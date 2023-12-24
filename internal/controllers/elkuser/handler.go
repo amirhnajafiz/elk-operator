@@ -34,9 +34,9 @@ func NewReconciler(mgr manager.Manager, db *sql.DB) *Reconciler {
 	}
 }
 
-//+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkusers,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkusers/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=monitoring.snappcload.io,resources=elkusers/finalizers,verbs=update
+//+kubebuilder:rbac:groups=monitoring.snappcloud.io,resources=elkusers,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=monitoring.snappcloud.io,resources=elkusers/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=monitoring.snappcloud.io,resources=elkusers/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.

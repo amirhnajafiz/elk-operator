@@ -72,7 +72,7 @@ func main() {
 		Port:                   9443,
 		HealthProbeBindAddress: probeAddr,
 		LeaderElection:         enableLeaderElection,
-		LeaderElectionID:       "ec9edfca.snappcload.io",
+		LeaderElectionID:       "ec9edfca.snappcloud.io",
 	})
 	if err != nil {
 		setupLog.Error(err, "unable to start manager")

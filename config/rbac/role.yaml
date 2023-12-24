@@ -18,7 +18,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - monitoring.snappcload.io
+  - monitoring.snappcloud.io
   resources:
   - elkclusters
   verbs:
@@ -30,13 +30,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - monitoring.snappcload.io
+  - monitoring.snappcloud.io
   resources:
   - elkclusters/finalizers
   verbs:
   - update
 - apiGroups:
-  - monitoring.snappcload.io
+  - monitoring.snappcloud.io
   resources:
   - elkclusters/status
   verbs:
@@ -44,7 +44,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - monitoring.snappcload.io
+  - monitoring.snappcloud.io
   resources:
   - elkusers
   verbs:
@@ -56,13 +56,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - monitoring.snappcload.io
+  - monitoring.snappcloud.io
   resources:
   - elkusers/finalizers
   verbs:
   - update
 - apiGroups:
-  - monitoring.snappcload.io
+  - monitoring.snappcloud.io
   resources:
   - elkusers/status
   verbs:

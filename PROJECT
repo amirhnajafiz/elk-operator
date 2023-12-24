@@ -1,4 +1,4 @@
-domain: snappcload.io
+domain: snappcloud.io
 layout:
 - go.kubebuilder.io/v3
 plugins:
@@ -11,7 +11,7 @@ resources:
     crdVersion: v1
     namespaced: true
   controller: true
-  domain: snappcload.io
+  domain: snappcloud.io
   group: monitoring
   kind: ElkCluster
   path: github.com/amirhnajafiz/elk-operator/api/v1alpha1
@@ -24,7 +24,7 @@ resources:
     crdVersion: v1
     namespaced: true
   controller: true
-  domain: snappcload.io
+  domain: snappcloud.io
   group: monitoring
   kind: ElkUser
   path: github.com/amirhnajafiz/elk-operator/api/v1alpha1
