@@ -37,9 +37,8 @@ type ElkUserSpec struct {
 	// +kubebuilder:validation:MinLength:=8
 	Password string `json:"password,omitempty"`
 
-	// Role of the Elk cluster user
-	// +kubebuilder:validation:Enum:=Admin;Dev
-	Role string `json:"role,omitempty"`
+	// Roles of the Elk cluster user
+	Roles []string `json:"roles,omitempty"`
 }
 
 // ElkUserStatus defines the observed state of ElkUser
