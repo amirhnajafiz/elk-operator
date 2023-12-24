@@ -19,12 +19,10 @@ func (r *Reconciler) Modify(ctx context.Context) (ctrl.Result, error) {
 	case apierrors.IsNotFound(err):
 		// resource not found
 		r.logger.Info(fmt.Sprintf("ElkCluster deployment %s not found!", name))
-
 		return ctrl.Result{}, nil
 	case err != nil:
 		// error in fetch
 		r.logger.Error(err, "failed to fetch object")
-
 		return subreconciler.Evaluate(subreconciler.Requeue())
 	default:
 		r.cluster.Status.Created = false
