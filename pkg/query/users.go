@@ -3,8 +3,6 @@ package query
 import (
 	"fmt"
 	"strings"
-
-	"github.com/amirhnajafiz/elk-operator/pkg/crypto"
 )
 
 type UsersQuery struct {
@@ -18,18 +16,18 @@ func (u *UsersQuery) Table() string {
 	return "users"
 }
 
-func (u *UsersQuery) queryInsert() string {
+func (u *UsersQuery) QueryInsert() string {
 	return fmt.Sprintf(
 		"INSERT INTO %s (username, password, roles, clusters) VALUES ('%s', '%s', '%s', '%s');",
 		u.Table(),
 		u.Username,
-		crypto.Hash(u.Password),
+		u.Password,
 		strings.Join(u.Roles, ";"),
 		strings.Join(u.Clusters, ";"),
 	)
 }
 
-func (u *UsersQuery) queryUpdate(old *UsersQuery) string {
+func (u *UsersQuery) QueryUpdate(old *UsersQuery) string {
 	return fmt.Sprintf(
 		"UPDATE %s SET username='%s', roles='%s', clusters='%s' WHERE username='%s';",
 		u.Table(),
@@ -40,10 +38,6 @@ func (u *UsersQuery) queryUpdate(old *UsersQuery) string {
 	)
 }
 
-func (u *UsersQuery) queryDelete() string {
+func (u *UsersQuery) QueryDelete() string {
 	return fmt.Sprintf("DELETE FROM %s WHERE username='%s'", u.Table(), u.Username)
-}
-
-func (u *UsersQuery) querySelect() string {
-	return fmt.Sprintf("SELECT * FROM %s WHERE username='%s'", u.Table(), u.Username)
 }
