@@ -55,12 +55,6 @@ func (r *ElkUser) ValidateCreate() error {
 func (r *ElkUser) ValidateUpdate(old runtime.Object) error {
 	elkuserlog.Info("validate update", "name", r.Name)
 
-	if flag, err := r.userExists(); err != nil {
-		return err
-	} else if flag {
-		return ErrUsernameExists
-	}
-
 	return nil
 }
 
