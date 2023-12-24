@@ -18,7 +18,7 @@ func (r *Reconciler) Provision(ctx context.Context) (ctrl.Result, error) {
 		Cluster:  r.user.Spec.Cluster,
 	}
 
-	r.user.Annotations["cluster"] = user.Cluster
+	r.user.Labels["cluster"] = user.Cluster
 	r.user.Status.Created = true
 	r.user.Spec.Password = user.Password
 
