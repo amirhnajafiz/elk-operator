@@ -1,0 +1,58 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: '[]'
+    capabilities: Basic Install
+  name: elk-operator.v0.0.0
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - description: ElkCluster is the Schema for the elkclusters API
+      displayName: Elk Cluster
+      kind: ElkCluster
+      name: elkclusters.monitoring.snappcload.io
+      version: v1alpha1
+    - description: ElkUser is the Schema for the elkusers API
+      displayName: Elk User
+      kind: ElkUser
+      name: elkusers.monitoring.snappcload.io
+      version: v1alpha1
+  description: A kubernetes operator for Elasticsearch, Logstash, and Kibana
+  displayName: elk-operator
+  icon:
+  - base64data: ""
+    mediatype: ""
+  install:
+    spec:
+      deployments: null
+    strategy: ""
+  installModes:
+  - supported: false
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - go
+  - golang
+  - elk
+  - elk-operator
+  - operator-sdk
+  - kuttl
+  links:
+  - name: Elk Operator
+    url: https://elk-operator.domain
+  maintainers:
+  - email: najafizadeh21@gmail.com
+    name: amirhossein.najafizadeh
+  maturity: alpha
+  provider:
+    name: amirhossein.najafizadeh
+    url: amirhnajafiz.github.io
+  version: 0.0.0
