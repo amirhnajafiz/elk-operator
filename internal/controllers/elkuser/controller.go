@@ -6,6 +6,8 @@ import (
 	monitoringv1alpha1 "github.com/amirhnajafiz/elk-operator/api/v1alpha1"
 )
 
+const finilizer = "monitoring.snappcloud.io/elk-operator"
+
 // SetupWithManager sets up the controller with the Manager.
 func (r *Reconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).

@@ -22,10 +22,15 @@ func (r *Reconciler) Provision(ctx context.Context) (ctrl.Result, error) {
 	r.user.Status.Created = true
 	r.user.Spec.Password = user.Password
 
-	tx, _ := r.db.Begin()
+	// create transaction
+	tx, er := r.db.Begin()
+	if er != nil {
+		r.logger.Error(er, "failed to init db transaction")
+		return subreconciler.Evaluate(subreconciler.Requeue())
+	}
 
-	// insert into db
-	if _, err := tx.Exec(user.QueryInsert()); err != nil {
+	// insert user into db
+	if _, err := tx.ExecContext(ctx, user.QueryInsert()); err != nil {
 		r.logger.Error(err, "failed to register user")
 		return subreconciler.Evaluate(subreconciler.Requeue())
 	}
