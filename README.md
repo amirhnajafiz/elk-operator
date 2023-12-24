@@ -32,7 +32,7 @@ spec:
   password: ""
   roles:
     - ""
-  clusters: ""
+  cluster: ""
 ```
 
 ## Getting Started
