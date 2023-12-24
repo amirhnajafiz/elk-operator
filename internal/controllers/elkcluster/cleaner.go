@@ -3,12 +3,14 @@ package elkcluster
 import (
 	"context"
 	"fmt"
-	"github.com/amirhnajafiz/elk-operator/api/v1alpha1"
+
 	"github.com/opdev/subreconciler"
 	v1 "k8s.io/api/apps/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+
+	"github.com/amirhnajafiz/elk-operator/api/v1alpha1"
 )
 
 func (r *Reconciler) Cleanup(ctx context.Context) (ctrl.Result, error) {
@@ -26,18 +28,26 @@ func (r *Reconciler) Cleanup(ctx context.Context) (ctrl.Result, error) {
 		return subreconciler.Evaluate(subreconciler.Requeue())
 	}
 
-	// delete users
-	var users v1alpha1.ElkUserList
-
-	opts := []client.ListOption{
-		client.MatchingLabels{
-			"cluster": r.cluster.Name,
-		},
-	}
+	// get users to remove them
+	var (
+		users v1alpha1.ElkUserList
+		opts  = []client.ListOption{
+			client.MatchingLabels{
+				"cluster": r.cluster.Name,
+			},
+		}
+	)
 
 	if err := r.List(ctx, &users, opts...); err != nil {
 		r.logger.Error(err, "failed to list users")
 		return subreconciler.Evaluate(subreconciler.Requeue())
+	}
+
+	for _, item := range users.Items {
+		if err := r.Delete(ctx, &item); err != nil {
+			r.logger.Error(err, "failed to remove user")
+			return subreconciler.Evaluate(subreconciler.Requeue())
+		}
 	}
 
 	// delete deployment object
