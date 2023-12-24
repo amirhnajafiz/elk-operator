@@ -38,6 +38,9 @@ spec:
               dashboard:
                 description: Dashboard is a flag to create a Kibana dashboard
                 type: boolean
+              ingress:
+                description: Ingress is the address of Elk cluster
+                type: string
               replica:
                 description: Replicas is the number of Elasticsearch clusters
                 maximum: 3

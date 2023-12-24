@@ -14,6 +14,9 @@ type ElkClusterSpec struct {
 	// Dashboard is a flag to create a Kibana dashboard
 	// +kubebuilder:validation:Optional
 	Dashboard bool `json:"dashboard,omitempty"`
+
+	// Ingress is the address of Elk cluster
+	Ingress string `json:"ingress,omitempty"`
 }
 
 // ElkClusterStatus defines the observed state of ElkCluster
