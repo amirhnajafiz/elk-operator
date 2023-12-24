@@ -102,7 +102,7 @@ var _ = BeforeSuite(func() {
 	})
 	Expect(err).NotTo(HaveOccurred())
 
-	err = (&ElkUser{}).SetupWebhookWithManager(mgr)
+	err = (&ElkUser{}).SetupWebhookWithManager(mgr, nil)
 	Expect(err).NotTo(HaveOccurred())
 
 	err = (&ElkCluster{}).SetupWebhookWithManager(mgr)
