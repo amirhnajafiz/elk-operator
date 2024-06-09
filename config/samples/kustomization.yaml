@@ -1,5 +1,0 @@
-## Append samples you want in your CSV to this file as resources ##
-resources:
-- monitoring_v1alpha1_elkcluster.yaml
-- monitoring_v1alpha1_elkuser.yaml
-#+kubebuilder:scaffold:manifestskustomizesamples
