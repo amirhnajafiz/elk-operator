@@ -1,0 +1,6 @@
+apiVersion: monitoring.amirhnajafiz.github.com.github.com/v1beta1
+kind: ELK
+metadata:
+  name: elk-sample
+spec:
+  # TODO(user): Add fields here
