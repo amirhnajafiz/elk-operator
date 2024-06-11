@@ -18,8 +18,9 @@ func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 			return subreconciler.Evaluate(subreconciler.Requeue())
 		}
 		// update status
-		// save it
-		// requeue
+		r.instance.Status.Configmap = true
+		// save it and requeue
+		return r.updateInstance(ctx, true)
 	case r.instance.Status.Elasticsearch:
 		// create elasticsearch
 		if err := r.ProvideElasticsearch(); err != nil {
@@ -27,8 +28,9 @@ func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 			return subreconciler.Evaluate(subreconciler.Requeue())
 		}
 		// update status
-		// save it
-		// requeue
+		r.instance.Status.Elasticsearch = true
+		// save it and requeue
+		return r.updateInstance(ctx, true)
 	case r.instance.Status.Logstash:
 		// create logstash
 		if err := r.ProvideLogstash(); err != nil {
@@ -36,8 +38,9 @@ func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 			return subreconciler.Evaluate(subreconciler.Requeue())
 		}
 		// update status
-		// save it
-		// requeue
+		r.instance.Status.Logstash = true
+		// save it and requeue
+		return r.updateInstance(ctx, true)
 	case r.instance.Status.Filebeats:
 		// create filebeats
 		if err := r.ProvideFilebeat(); err != nil {
@@ -45,8 +48,9 @@ func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 			return subreconciler.Evaluate(subreconciler.Requeue())
 		}
 		// update status
-		// save it
-		// requeue
+		r.instance.Status.Filebeats = true
+		// save it and requeue
+		return r.updateInstance(ctx, true)
 	case r.instance.Status.Kibana:
 		// create kibana
 		if err := r.ProvideKibana(); err != nil {
@@ -54,8 +58,9 @@ func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 			return subreconciler.Evaluate(subreconciler.Requeue())
 		}
 		// update status
-		// save it
-		// requeue
+		r.instance.Status.Kibana = true
+		// save it and requeue
+		return r.updateInstance(ctx, true)
 	case r.instance.Status.SVC:
 		// create services
 		if err := r.ProvideServices(); err != nil {
@@ -63,11 +68,27 @@ func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 			return subreconciler.Evaluate(subreconciler.Requeue())
 		}
 		// update status
-		// save it
-		// requeue
+		r.instance.Status.SVC = true
+		// save it and requeue
+		return r.updateInstance(ctx, true)
 	default:
 		// update status
+		r.instance.Status.Ready = true
 		// save it
+		return r.updateInstance(ctx, false)
+	}
+}
+
+// updateInstance method saves the current instance, and ends the concile process
+func (r *Reconciler) updateInstance(ctx context.Context, queue bool) (ctrl.Result, error) {
+	if err := r.Update(ctx, r.instance); err != nil {
+		r.logger.Error(err, "failed to update instance")
+		return subreconciler.Evaluate(subreconciler.Requeue())
+	}
+
+	// requeue if flag is true
+	if queue {
+		return subreconciler.Evaluate(subreconciler.Requeue())
 	}
 
 	return subreconciler.Evaluate(subreconciler.DoNotRequeue())
