@@ -13,31 +13,55 @@ func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 	switch {
 	case r.instance.Status.Configmap:
 		// create configmaps
+		if err := r.ProvideConfigmaps(); err != nil {
+			r.logger.Error(err, "failed to create configmaps")
+			return subreconciler.Evaluate(subreconciler.Requeue())
+		}
 		// update status
 		// save it
 		// requeue
 	case r.instance.Status.Elasticsearch:
-		// create configmaps
+		// create elasticsearch
+		if err := r.ProvideElasticsearch(); err != nil {
+			r.logger.Error(err, "failed to create elasticsearch")
+			return subreconciler.Evaluate(subreconciler.Requeue())
+		}
 		// update status
 		// save it
 		// requeue
 	case r.instance.Status.Logstash:
-		// create configmaps
+		// create logstash
+		if err := r.ProvideLogstash(); err != nil {
+			r.logger.Error(err, "failed to create logstash")
+			return subreconciler.Evaluate(subreconciler.Requeue())
+		}
 		// update status
 		// save it
 		// requeue
 	case r.instance.Status.Filebeats:
-		// create configmaps
+		// create filebeats
+		if err := r.ProvideFilebeat(); err != nil {
+			r.logger.Error(err, "failed to create filebeat")
+			return subreconciler.Evaluate(subreconciler.Requeue())
+		}
 		// update status
 		// save it
 		// requeue
 	case r.instance.Status.Kibana:
-		// create configmaps
+		// create kibana
+		if err := r.ProvideKibana(); err != nil {
+			r.logger.Error(err, "failed to create kibana")
+			return subreconciler.Evaluate(subreconciler.Requeue())
+		}
 		// update status
 		// save it
 		// requeue
 	case r.instance.Status.SVC:
-		// create configmaps
+		// create services
+		if err := r.ProvideServices(); err != nil {
+			r.logger.Error(err, "failed to create services")
+			return subreconciler.Evaluate(subreconciler.Requeue())
+		}
 		// update status
 		// save it
 		// requeue
