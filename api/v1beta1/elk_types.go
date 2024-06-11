@@ -10,9 +10,9 @@ import (
 // ELKSpec defines the desired state of ELK
 type ELKSpec struct {
 	// Logstash defines the desired state of Logstash deployment
-	Logstash LogstashSpec `json:"logstash"`
+	Logstash LogstashSpec `json:"logstash,omitempty"`
 	// Elasticsearch defines the desired state of Elasticsearch deployment
-	Elasticsearch ElasticsearchSpec `json:"elasticsearch"`
+	Elasticsearch ElasticsearchSpec `json:"elasticsearch,omitempty"`
 }
 
 // LogstashSpec defines the desired state of Logstash
@@ -30,17 +30,17 @@ type ElasticsearchSpec struct {
 // ELKStatus defines the observed state of ELK
 type ELKStatus struct {
 	// Configmap stage status (if true then it is built)
-	Configmap bool `json:"configmap"`
+	Configmap bool `json:"configmap,omitempty"`
 	// Elasticsearch stage status (if true then it is built)
-	Elasticsearch bool `json:"elasticsearch"`
+	Elasticsearch bool `json:"elasticsearch,omitempty"`
 	// Logstash stage status (if true then it is built)
-	Logstash bool `json:"logstash"`
+	Logstash bool `json:"logstash,omitempty"`
 	// Filebeats stage status (if true then it is built)
-	Filebeats bool `json:"filebeats"`
+	Filebeats bool `json:"filebeats,omitempty"`
 	// Kibana stage status (if true then it is built)
-	Kibana bool `json:"kibana"`
+	Kibana bool `json:"kibana,omitempty"`
 	// SVC stage status (if true then it is built)
-	SVC bool `json:"svc"`
+	SVC bool `json:"svc,omitempty"`
 }
 
 //+kubebuilder:object:root=true
