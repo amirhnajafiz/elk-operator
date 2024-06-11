@@ -1,10 +1,10 @@
 # ELK Operator
 
-Setup ELK (Elasticsearch, Logstash, and Kibana) on your Kubernetes namespaces using `ELK-Operator`.
+Setup ELK (Elasticsearch, Logstash, and Kibana) stack on your Kubernetes cluster using `ELK-Operator`.
 
 ## Description
 
-This operator can be used to deploy ELK Clusters on Kubernetes namespaces. It is created using `operator-sdk`. After installing the operator on your cluster, all you have to do is create a `ELK` resource from `monitoring.amirhnajafiz.github.com/v1beta1` api.
+This operator can be used to deploy ELK stack on Kubernetes clusters. It is created using `operator-sdk`. After installing the operator on your cluster, all you have to do is create a `ELK` resource from `monitoring.amirhnajafiz.github.com/v1beta1` api.
 
 ## Getting Started
 
