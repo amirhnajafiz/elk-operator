@@ -17,9 +17,10 @@ import (
 // ELKReconciler reconciles a ELK object
 type ELKReconciler struct {
 	client.Client
-	Scheme   *runtime.Scheme
-	logger   logr.Logger
-	instance *monitoringamirhnajafizgithubcomv1beta1.ELK
+	Scheme    *runtime.Scheme
+	logger    logr.Logger
+	instance  *monitoringamirhnajafizgithubcomv1beta1.ELK
+	namespace string
 }
 
 //+kubebuilder:rbac:groups=monitoring.amirhnajafiz.github.com,resources=elks,verbs=get;list;watch;create;update;patch;delete
@@ -31,6 +32,7 @@ type ELKReconciler struct {
 func (r *ELKReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	// set logger
 	r.logger = log.FromContext(ctx)
+	r.namespace = req.Namespace
 
 	// trying to get ELK instance
 	err := r.Get(ctx, req.NamespacedName, r.instance)
