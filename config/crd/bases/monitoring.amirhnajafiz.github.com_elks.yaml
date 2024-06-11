@@ -35,13 +35,44 @@ spec:
           spec:
             description: ELKSpec defines the desired state of ELK
             properties:
-              foo:
-                description: Foo is an example field of ELK. Edit elk_types.go to
-                  remove/update
-                type: string
+              elasticsearch:
+                properties:
+                  replicas:
+                    type: integer
+                type: object
+              logstash:
+                properties:
+                  replicas:
+                    type: integer
+                type: object
+            required:
+            - elasticsearch
+            - logstash
             type: object
           status:
             description: ELKStatus defines the observed state of ELK
+            properties:
+              configmap:
+                description: 'Important: Run "make" to regenerate code after modifying
+                  this file'
+                type: boolean
+              elastic:
+                type: boolean
+              filebeats:
+                type: boolean
+              kibana:
+                type: boolean
+              logstash:
+                type: boolean
+              svc:
+                type: boolean
+            required:
+            - configmap
+            - elastic
+            - filebeats
+            - kibana
+            - logstash
+            - svc
             type: object
         type: object
     served: true

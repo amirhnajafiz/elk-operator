@@ -1,41 +1,34 @@
-/*
-Copyright 2024.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
 package v1beta1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // ELKSpec defines the desired state of ELK
 type ELKSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	Logstash      LogstashSpec      `json:"logstash"`
+	Elasticsearch ElasticsearchSpec `json:"elasticsearch"`
+}
 
-	// Foo is an example field of ELK. Edit elk_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+type LogstashSpec struct {
+	Replicas int `json:"replicas,omitempty"`
+}
+
+type ElasticsearchSpec struct {
+	Replicas int `json:"replicas,omitempty"`
 }
 
 // ELKStatus defines the observed state of ELK
 type ELKStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	Configmap      bool `json:"configmap"`
+	Elasticcsearch bool `json:"elastic"`
+	Logstash       bool `json:"logstash"`
+	Filebeats      bool `json:"filebeats"`
+	Kibana         bool `json:"kibana"`
+	SVC            bool `json:"svc"`
 }
 
 //+kubebuilder:object:root=true
