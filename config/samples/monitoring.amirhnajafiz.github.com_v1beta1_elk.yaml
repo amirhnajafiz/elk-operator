@@ -1,4 +1,4 @@
-apiVersion: monitoring.amirhnajafiz.github.com.github.com/v1beta1
+apiVersion: monitoring.amirhnajafiz.github.com/v1beta1
 kind: ELK
 metadata:
   name: elk-sample

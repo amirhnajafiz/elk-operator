@@ -4,7 +4,7 @@ Setup ELK (Elasticsearch, Logstash, and Kibana) on your Kubernetes namespaces us
 
 ## Description
 
-This operator can be used to deploy ELK Clusters on Kubernetes namespaces. It is created using `operator-sdk`. After installing the operator on your cluster, all you have to do is create a `ELK` resource from `monitoring.amirhnajafiz.github.com.github.com/v1beta1` api.
+This operator can be used to deploy ELK Clusters on Kubernetes namespaces. It is created using `operator-sdk`. After installing the operator on your cluster, all you have to do is create a `ELK` resource from `monitoring.amirhnajafiz.github.com/v1beta1` api.
 
 ## Getting Started
 

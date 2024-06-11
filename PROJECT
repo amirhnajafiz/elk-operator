@@ -12,7 +12,7 @@ resources:
     namespaced: true
   controller: true
   domain: github.com
-  group: monitoring.amirhnajafiz.github.com
+  group: monitoring.amirhnajafiz
   kind: ELK
   path: github.com/amirhnajafiz/elk-operator/api/v1beta1
   version: v1beta1

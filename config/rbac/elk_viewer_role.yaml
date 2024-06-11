@@ -5,7 +5,7 @@ metadata:
   name: elk-viewer-role
 rules:
 - apiGroups:
-  - monitoring.amirhnajafiz.github.com.github.com
+  - monitoring.amirhnajafiz.github.com
   resources:
   - elks
   verbs:
@@ -13,7 +13,7 @@ rules:
   - list
   - watch
 - apiGroups:
-  - monitoring.amirhnajafiz.github.com.github.com
+  - monitoring.amirhnajafiz.github.com
   resources:
   - elks/status
   verbs:

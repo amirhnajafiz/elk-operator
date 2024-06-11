@@ -4,4 +4,4 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: $(CERTIFICATE_NAMESPACE)/$(CERTIFICATE_NAME)
-  name: elks.monitoring.amirhnajafiz.github.com.github.com
+  name: elks.monitoring.amirhnajafiz.github.com

@@ -6,7 +6,7 @@ metadata:
   name: manager-role
 rules:
 - apiGroups:
-  - monitoring.amirhnajafiz.github.com.github.com
+  - monitoring.amirhnajafiz.github.com
   resources:
   - elks
   verbs:
@@ -18,13 +18,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - monitoring.amirhnajafiz.github.com.github.com
+  - monitoring.amirhnajafiz.github.com
   resources:
   - elks/finalizers
   verbs:
   - update
 - apiGroups:
-  - monitoring.amirhnajafiz.github.com.github.com
+  - monitoring.amirhnajafiz.github.com
   resources:
   - elks/status
   verbs:

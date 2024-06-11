@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Package v1beta1 contains API Schema definitions for the monitoring.amirhnajafiz.github.com v1beta1 API group
+// Package v1beta1 contains API Schema definitions for the monitoring.amirhnajafiz v1beta1 API group
 // +kubebuilder:object:generate=true
-// +groupName=monitoring.amirhnajafiz.github.com.github.com
+// +groupName=monitoring.amirhnajafiz.github.com
 package v1beta1
 
 import (
@@ -26,7 +26,7 @@ import (
 
 var (
 	// GroupVersion is group version used to register these objects
-	GroupVersion = schema.GroupVersion{Group: "monitoring.amirhnajafiz.github.com.github.com", Version: "v1beta1"}
+	GroupVersion = schema.GroupVersion{Group: "monitoring.amirhnajafiz.github.com", Version: "v1beta1"}
 
 	// SchemeBuilder is used to add go types to the GroupVersionKind scheme
 	SchemeBuilder = &scheme.Builder{GroupVersion: GroupVersion}
