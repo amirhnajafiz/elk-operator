@@ -1,10 +1,10 @@
 # ELK Operator
 
-// TODO(user): Add simple overview of use/purpose
+Setup ELK (Elasticsearch, Logstash, and Kibana) on your Kubernetes namespaces using `ELK-Operator`.
 
 ## Description
 
-// TODO(user): An in-depth paragraph about your project and overview of use
+This operator can be used to deploy ELK Clusters on Kubernetes namespaces. It is created using `operator-sdk`. After installing the operator on your cluster, all you have to do is create a `ELK` resource from `monitoring.amirhnajafiz.github.com.github.com/v1beta1` api.
 
 ## Getting Started
 
@@ -46,10 +46,6 @@ UnDeploy the controller to the cluster:
 ```sh
 make undeploy
 ```
-
-## Contributing
-
-// TODO(user): Add detailed information on how you would like others to contribute to this project
 
 ### How it works
 
