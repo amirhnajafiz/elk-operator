@@ -9,5 +9,5 @@ import (
 
 // Cleanup method is used to delete all resources that are created by ELK operator.
 func (r *Reconciler) Cleanup(ctx context.Context) (ctrl.Result, error) {
-	return subreconciler.Evaluate(subreconciler.Requeue())
+	return subreconciler.Evaluate(subreconciler.DoNotRequeue())
 }

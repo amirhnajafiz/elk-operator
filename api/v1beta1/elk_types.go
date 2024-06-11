@@ -41,6 +41,8 @@ type ELKStatus struct {
 	Kibana bool `json:"kibana,omitempty"`
 	// SVC stage status (if true then it is built)
 	SVC bool `json:"svc,omitempty"`
+	// Ready is a flag to ensure all ELK resources are created or not
+	Ready bool `json:"ready,omitempty"`
 }
 
 //+kubebuilder:object:root=true
