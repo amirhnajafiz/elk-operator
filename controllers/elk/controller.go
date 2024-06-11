@@ -15,8 +15,8 @@ import (
 	monitoringamirhnajafizgithubcomv1beta1 "github.com/amirhnajafiz/elk-operator/api/v1beta1"
 )
 
-// ELKReconciler reconciles a ELK object
-type ELKReconciler struct {
+// Reconciler reconciles a ELK object
+type Reconciler struct {
 	client.Client
 	Scheme    *runtime.Scheme
 	logger    logr.Logger
@@ -30,7 +30,7 @@ type ELKReconciler struct {
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
-func (r *ELKReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	// set logger, instance, and variables
 	r.logger = log.FromContext(ctx)
 	r.instance = &monitoringamirhnajafizgithubcomv1beta1.ELK{}
@@ -38,12 +38,12 @@ func (r *ELKReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 
 	// trying to get ELK instance
 	switch err := r.Get(ctx, req.NamespacedName, r.instance); {
-	case apierrors.IsNotFound(err):
+	case apierrors.IsNotFound(err): // if not found, cleanup the resources
 		return r.Cleanup(ctx)
 	case err != nil:
 		r.logger.Error(err, "failed to fetch object")
 		return subreconciler.Evaluate(subreconciler.Requeue())
-	default:
+	default: // check deletion timestamp to cleanup the resources
 		if r.instance.ObjectMeta.DeletionTimestamp != nil {
 			return r.Cleanup(ctx)
 		}
@@ -52,12 +52,12 @@ func (r *ELKReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 	return r.Handler(ctx)
 }
 
-func (r *ELKReconciler) initVars(req ctrl.Request) {
+func (r *Reconciler) initVars(req ctrl.Request) {
 	r.namespace = req.Namespace
 }
 
 // SetupWithManager sets up the controller with the Manager.
-func (r *ELKReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (r *Reconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&monitoringamirhnajafizgithubcomv1beta1.ELK{}).
 		WithEventFilter(predicate.GenerationChangedPredicate{}).

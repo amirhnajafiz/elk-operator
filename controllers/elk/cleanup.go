@@ -8,6 +8,6 @@ import (
 )
 
 // Cleanup method is used to delete all resources that are created by ELK operator.
-func (r *ELKReconciler) Cleanup(ctx context.Context) (ctrl.Result, error) {
+func (r *Reconciler) Cleanup(ctx context.Context) (ctrl.Result, error) {
 	return subreconciler.Evaluate(subreconciler.Requeue())
 }

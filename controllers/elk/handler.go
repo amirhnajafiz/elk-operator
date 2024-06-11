@@ -9,6 +9,6 @@ import (
 
 // Handler is the main method of our reconciler, it calls other methods
 // based on the current instance status.
-func (r *ELKReconciler) Handler(ctx context.Context) (ctrl.Result, error) {
+func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 	return subreconciler.Evaluate(subreconciler.Requeue())
 }
