@@ -54,9 +54,6 @@ spec:
           status:
             description: ELKStatus defines the observed state of ELK
             properties:
-              configmap:
-                description: Configmap stage status (if true then it is built)
-                type: boolean
               elasticsearch:
                 description: Elasticsearch stage status (if true then it is built)
                 type: boolean
@@ -69,8 +66,9 @@ spec:
               logstash:
                 description: Logstash stage status (if true then it is built)
                 type: boolean
-              svc:
-                description: SVC stage status (if true then it is built)
+              ready:
+                description: Ready is a flag to ensure all ELK resources are created
+                  or not
                 type: boolean
             type: object
         type: object
