@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-logr/logr"
 	"github.com/opdev/subreconciler"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -30,18 +31,29 @@ type ELKReconciler struct {
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
 func (r *ELKReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	// set logger
+	// set logger, instance, and variables
 	r.logger = log.FromContext(ctx)
-	r.namespace = req.Namespace
+	r.instance = &monitoringamirhnajafizgithubcomv1beta1.ELK{}
+	r.initVars(req)
 
 	// trying to get ELK instance
-	err := r.Get(ctx, req.NamespacedName, r.instance)
-	if err != nil {
-		r.logger.Error(err, "")
+	switch err := r.Get(ctx, req.NamespacedName, r.instance); {
+	case apierrors.IsNotFound(err):
+		return r.Cleanup(ctx)
+	case err != nil:
+		r.logger.Error(err, "failed to fetch object")
 		return subreconciler.Evaluate(subreconciler.Requeue())
+	default:
+		if r.instance.ObjectMeta.DeletionTimestamp != nil {
+			return r.Cleanup(ctx)
+		}
 	}
 
-	return ctrl.Result{}, nil
+	return r.Handler(ctx)
+}
+
+func (r *ELKReconciler) initVars(req ctrl.Request) {
+	r.namespace = req.Namespace
 }
 
 // SetupWithManager sets up the controller with the Manager.
