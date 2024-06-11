@@ -4,31 +4,43 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+// Important: Run "make" to regenerate code after modifying this file
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // ELKSpec defines the desired state of ELK
 type ELKSpec struct {
-	Logstash      LogstashSpec      `json:"logstash"`
+	// Logstash defines the desired state of Logstash deployment
+	Logstash LogstashSpec `json:"logstash"`
+	// Elasticsearch defines the desired state of Elasticsearch deployment
 	Elasticsearch ElasticsearchSpec `json:"elasticsearch"`
 }
 
+// LogstashSpec defines the desired state of Logstash
 type LogstashSpec struct {
+	// Replicas define the number of logstash instances
 	Replicas int `json:"replicas,omitempty"`
 }
 
+// ElasticsearchSpec defines the desired state of Elasticsearch
 type ElasticsearchSpec struct {
+	// Replicas define the number of elasticsearch instances
 	Replicas int `json:"replicas,omitempty"`
 }
 
 // ELKStatus defines the observed state of ELK
 type ELKStatus struct {
-	// Important: Run "make" to regenerate code after modifying this file
-	Configmap      bool `json:"configmap"`
-	Elasticcsearch bool `json:"elastic"`
-	Logstash       bool `json:"logstash"`
-	Filebeats      bool `json:"filebeats"`
-	Kibana         bool `json:"kibana"`
-	SVC            bool `json:"svc"`
+	// Configmap stage status (if true then it is built)
+	Configmap bool `json:"configmap"`
+	// Elasticsearch stage status (if true then it is built)
+	Elasticsearch bool `json:"elasticsearch"`
+	// Logstash stage status (if true then it is built)
+	Logstash bool `json:"logstash"`
+	// Filebeats stage status (if true then it is built)
+	Filebeats bool `json:"filebeats"`
+	// Kibana stage status (if true then it is built)
+	Kibana bool `json:"kibana"`
+	// SVC stage status (if true then it is built)
+	SVC bool `json:"svc"`
 }
 
 //+kubebuilder:object:root=true

@@ -36,13 +36,18 @@ spec:
             description: ELKSpec defines the desired state of ELK
             properties:
               elasticsearch:
+                description: Elasticsearch defines the desired state of Elasticsearch
+                  deployment
                 properties:
                   replicas:
+                    description: Replicas define the number of elasticsearch instances
                     type: integer
                 type: object
               logstash:
+                description: Logstash defines the desired state of Logstash deployment
                 properties:
                   replicas:
+                    description: Replicas define the number of logstash instances
                     type: integer
                 type: object
             required:
@@ -53,18 +58,22 @@ spec:
             description: ELKStatus defines the observed state of ELK
             properties:
               configmap:
-                description: 'Important: Run "make" to regenerate code after modifying
-                  this file'
+                description: Configmap stage status (if true then it is built)
                 type: boolean
               elastic:
+                description: Elasticcsearch stage status (if true then it is built)
                 type: boolean
               filebeats:
+                description: Filebeats stage status (if true then it is built)
                 type: boolean
               kibana:
+                description: Kibana stage status (if true then it is built)
                 type: boolean
               logstash:
+                description: Logstash stage status (if true then it is built)
                 type: boolean
               svc:
+                description: SVC stage status (if true then it is built)
                 type: boolean
             required:
             - configmap
