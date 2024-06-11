@@ -1,5 +1,5 @@
 package resources
 
-func FilebeatDeamonsetResource(namespace int) {
+func FilebeatDeamonsetResource(namespace string) {
 
 }

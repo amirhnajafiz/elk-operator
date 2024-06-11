@@ -29,8 +29,6 @@ type ElasticsearchSpec struct {
 
 // ELKStatus defines the observed state of ELK
 type ELKStatus struct {
-	// Configmap stage status (if true then it is built)
-	Configmap bool `json:"configmap,omitempty"`
 	// Elasticsearch stage status (if true then it is built)
 	Elasticsearch bool `json:"elasticsearch,omitempty"`
 	// Logstash stage status (if true then it is built)
@@ -39,8 +37,6 @@ type ELKStatus struct {
 	Filebeats bool `json:"filebeats,omitempty"`
 	// Kibana stage status (if true then it is built)
 	Kibana bool `json:"kibana,omitempty"`
-	// SVC stage status (if true then it is built)
-	SVC bool `json:"svc,omitempty"`
 	// Ready is a flag to ensure all ELK resources are created or not
 	Ready bool `json:"ready,omitempty"`
 }

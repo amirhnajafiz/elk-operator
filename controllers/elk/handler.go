@@ -11,16 +11,6 @@ import (
 // based on the current instance status.
 func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 	switch {
-	case r.instance.Status.Configmap:
-		// create configmaps
-		if err := r.ProvideConfigmaps(); err != nil {
-			r.logger.Error(err, "failed to create configmaps")
-			return subreconciler.Evaluate(subreconciler.Requeue())
-		}
-		// update status
-		r.instance.Status.Configmap = true
-		// save it and requeue
-		return r.updateInstance(ctx, true)
 	case r.instance.Status.Elasticsearch:
 		// create elasticsearch
 		if err := r.ProvideElasticsearch(); err != nil {
@@ -59,16 +49,6 @@ func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 		}
 		// update status
 		r.instance.Status.Kibana = true
-		// save it and requeue
-		return r.updateInstance(ctx, true)
-	case r.instance.Status.SVC:
-		// create services
-		if err := r.ProvideServices(); err != nil {
-			r.logger.Error(err, "failed to create services")
-			return subreconciler.Evaluate(subreconciler.Requeue())
-		}
-		// update status
-		r.instance.Status.SVC = true
 		// save it and requeue
 		return r.updateInstance(ctx, true)
 	default:
