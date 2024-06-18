@@ -13,7 +13,7 @@ func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 	switch {
 	case r.instance.Status.Elasticsearch:
 		// create elasticsearch
-		if err := r.ProvideElasticsearch(); err != nil {
+		if err := r.ProvideElasticsearch(ctx); err != nil {
 			r.logger.Error(err, "failed to create elasticsearch")
 			return subreconciler.Evaluate(subreconciler.Requeue())
 		}
@@ -23,7 +23,7 @@ func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 		return r.updateInstance(ctx, true)
 	case r.instance.Status.Logstash:
 		// create logstash
-		if err := r.ProvideLogstash(); err != nil {
+		if err := r.ProvideLogstash(ctx); err != nil {
 			r.logger.Error(err, "failed to create logstash")
 			return subreconciler.Evaluate(subreconciler.Requeue())
 		}
@@ -33,7 +33,7 @@ func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 		return r.updateInstance(ctx, true)
 	case r.instance.Status.Filebeats:
 		// create filebeats
-		if err := r.ProvideFilebeat(); err != nil {
+		if err := r.ProvideFilebeat(ctx); err != nil {
 			r.logger.Error(err, "failed to create filebeat")
 			return subreconciler.Evaluate(subreconciler.Requeue())
 		}
@@ -43,7 +43,7 @@ func (r *Reconciler) Handler(ctx context.Context) (ctrl.Result, error) {
 		return r.updateInstance(ctx, true)
 	case r.instance.Status.Kibana:
 		// create kibana
-		if err := r.ProvideKibana(); err != nil {
+		if err := r.ProvideKibana(ctx); err != nil {
 			r.logger.Error(err, "failed to create kibana")
 			return subreconciler.Evaluate(subreconciler.Requeue())
 		}
