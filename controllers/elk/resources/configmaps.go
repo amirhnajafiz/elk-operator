@@ -17,6 +17,34 @@ func newConfigmapResource(name, namespace string) *corev1.ConfigMap {
 func ElasticsearchConfigmapResource(name, namespace string) *corev1.ConfigMap {
 	cmp := newConfigmapResource(name, namespace)
 
+	cmp.Data["elasticsearch.yml"] = `
+	cluster:
+      name: ${CLUSTER_NAME}
+    node:
+      master: ${NODE_MASTER}
+      data: ${NODE_DATA}
+      name: ${NODE_NAME}
+      ingest: ${NODE_INGEST}
+      max_local_storage_nodes: 1
+      attr.box_type: hot
+
+    processors: ${PROCESSORS:1}
+
+    network.host: ${NETWORK_HOST}
+
+    path:
+      data: /usr/share/elasticsearch/data
+      logs: /usr/share/elasticsearch/logs
+
+    http:
+      compression: true
+
+    discovery:
+      zen:
+        ping.unicast.hosts: ${DISCOVERY_SERVICE}
+        minimum_master_nodes: ${NUMBER_OF_MASTERS}
+	`
+
 	return cmp
 }
 
