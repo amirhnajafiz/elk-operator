@@ -20,14 +20,20 @@ func ElasticsearchConfigmapResource(name, namespace string) *corev1.ConfigMap {
 	return cmp
 }
 
-func LogstashConfigmapResource(namespace string) {
+func LogstashConfigmapResource(name, namespace string) *corev1.ConfigMap {
+	cmp := newConfigmapResource(name, namespace)
 
+	return cmp
 }
 
-func FilebeatConfigmapResource(namespace string) {
+func FilebeatConfigmapResource(name, namespace string) *corev1.ConfigMap {
+	cmp := newConfigmapResource(name, namespace)
 
+	return cmp
 }
 
-func KibanaConfigmapResource(namespace string) {
+func KibanaConfigmapResource(name, namespace string) *corev1.ConfigMap {
+	cmp := newConfigmapResource(name, namespace)
 
+	return cmp
 }

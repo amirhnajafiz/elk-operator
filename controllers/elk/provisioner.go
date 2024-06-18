@@ -3,7 +3,7 @@ package controllers
 import "github.com/amirhnajafiz/elk-operator/controllers/elk/resources"
 
 func (r *Reconciler) ProvideElasticsearch() error {
-	resources.ElasticsearchConfigmapResource(r.namespace)
+	resources.ElasticsearchConfigmapResource(elasticsearchConfigmap, r.namespace)
 	resources.ElasticsearchStatefulsetResource(r.namespace)
 	resources.ElasticsearchSVCResource(r.namespace)
 
@@ -11,7 +11,7 @@ func (r *Reconciler) ProvideElasticsearch() error {
 }
 
 func (r *Reconciler) ProvideLogstash() error {
-	resources.LogstashConfigmapResource(r.namespace)
+	resources.LogstashConfigmapResource(logstashConfigmap, r.namespace)
 	resources.LogstashDeploymentResource(r.namespace)
 	resources.LogstashSVCResource(r.namespace)
 
@@ -19,7 +19,7 @@ func (r *Reconciler) ProvideLogstash() error {
 }
 
 func (r *Reconciler) ProvideFilebeat() error {
-	resources.FilebeatConfigmapResource(r.namespace)
+	resources.FilebeatConfigmapResource(filebeatConfigmap, r.namespace)
 	resources.FilebeatRoleResource(r.namespace)
 	resources.FilebeatRoleBindingResource(r.namespace)
 	resources.FilebeatServiceAccountResource(r.namespace)
@@ -29,7 +29,7 @@ func (r *Reconciler) ProvideFilebeat() error {
 }
 
 func (r *Reconciler) ProvideKibana() error {
-	resources.KibanaConfigmapResource(r.namespace)
+	resources.KibanaConfigmapResource(kibanaConfigmap, r.namespace)
 	resources.KibanaReplicasetResource(r.namespace)
 	resources.KibanaSVCResource(r.namespace)
 
