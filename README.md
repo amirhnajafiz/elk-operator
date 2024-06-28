@@ -6,6 +6,18 @@ Setup ELK (Elasticsearch, Logstash, and Kibana) stack on your Kubernetes cluster
 
 This operator can be used to deploy ELK stack on Kubernetes clusters. It is created using `operator-sdk`. After installing the operator on your cluster, all you have to do is create a `ELK` resource from `monitoring.amirhnajafiz.github.com/v1beta1` api.
 
+```yaml
+apiVersion: monitoring.amirhnajafiz.github.com/v1beta1
+kind: ELK
+metadata:
+  name: elk-sample
+spec:
+  logstash:
+    replicas: 10
+  elasticsearch:
+    replicas: 5
+```
+
 ## Getting Started
 
 You'll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.

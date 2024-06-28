@@ -3,4 +3,7 @@ kind: ELK
 metadata:
   name: elk-sample
 spec:
-  # TODO(user): Add fields here
+  logstash:
+    replicas: 10
+  elasticsearch:
+    replicas: 5
